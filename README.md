@@ -1,2 +1,2 @@
 # CodeLaunch-tasks
-Repositorio con ejercicio del challenge de nivelación técnica
+Repositorio con ejercicios del challenge de nivelación técnica
