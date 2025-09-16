@@ -45,3 +45,17 @@ export async function updateTask(req,res){
 		return res.status(500).json({ error: err.message });
 	}
 }
+
+export async function removeTask(req,res){
+	try {
+		const db = await dbPromise;
+		const {id} = req.params;
+
+		const result = await db.run("DELETE FROM tasks WHERE id = :id", {
+			":id" : id,
+		});
+		return !result ? res.status(400).json({ message: 'Error to add tasks, try again' }) : res.status(200).json({ message: `tasks with id: ${id} have been deleted` })
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+}
