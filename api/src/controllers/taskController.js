@@ -25,3 +25,23 @@ export async function setTasks(req, res) {
 		return res.status(500).json({ error: err.message });
 	}
 }
+
+export async function updateTask(req,res){
+	try {
+		const db = await dbPromise;
+		const { title, description, done } = req.body;
+		const {id} = req.params;
+		const query = await db.all("SELECT * FROM tasks WHERE id = :id",{
+			":id": id
+		})
+		const result = await db.run("UPDATE tasks SET title = :title, description = :description, done = :done WHERE id = :id", {
+			":id" : id,
+			':title': title ?? query['title'],
+			':description': description ?? query['description'],
+			':done': done ?? query['done'],
+		});
+		return !result ? res.status(400).json({ message: 'Error to add tasks, try again' }) : res.status(200).json({ message: `tasks with id: ${id} have been updated` })
+	} catch (err) {
+		return res.status(500).json({ error: err.message });
+	}
+}
