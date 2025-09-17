@@ -18,6 +18,19 @@ class Database extends Connection {
     const db = await this.getDb();
     return db.all("SELECT * FROM tasks");
   }
+  /**
+   * Returns the task by id
+   * @param {string} id
+   * @returns tasks
+   */
+  async getTasksById(id) {
+    if (!id) {
+      return false;
+    }
+    const db = await this.getDb();
+    const result = await db.all("SELECT * FROM tasks WHERE id = ?", id);
+    return result[0] ?? null;
+  }
   async insertTask(params = {}) {
     if (Object.entries(params).length == 0) {
       return false;
@@ -31,6 +44,27 @@ class Database extends Connection {
     )}) VALUES (${placeholders.join(",")})`;
     const stmt = await db.prepare(sql);
     const result = await stmt.run(values);
+
+    return result ?? false;
+  }
+  /**
+   * Update a task by id
+   * @param {object} params
+   * @param {string} id
+   * @returns
+   */
+  async updateTask(params = {}, id) {
+    if (Object.entries(params).length == 0) {
+      return false;
+    }
+    const db = await this.getDb();
+    const columns = Object.keys(params);
+    const setStrings = columns.map((col) => `${col} = ?`).join(",");
+    const values = Object.values(params);
+    const sql = `UPDATE tasks SET ${setStrings} WHERE id = ? `;
+    const stmt = await db.prepare(sql);
+    const result = await stmt.run(...values, id);
+    await stmt.finalize();
     return result ?? false;
   }
 }
