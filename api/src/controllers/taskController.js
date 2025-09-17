@@ -25,25 +25,24 @@ export async function setTasks(req, res) {
 
 export async function updateTask(req, res) {
   try {
-    const db = await dbPromise;
     const { title, description, done } = req.body;
     const { id } = req.params;
-    const query = await db.all("SELECT * FROM tasks WHERE id = :id", {
-      ":id": id,
-    });
-    const result = await db.run(
-      "UPDATE tasks SET title = :title, description = :description, done = :done WHERE id = :id",
+    const task = await DB.getTasksById(id);
+    if (!task) {
+      return res.status(404).json({ message: "task not found" });
+    }
+    const result = await DB.updateTask(
       {
-        ":id": id,
-        ":title": title ?? query["title"],
-        ":description": description ?? query["description"],
-        ":done": done ?? query["done"],
-      }
+        title: title ?? task.title,
+        description: description ?? task.description,
+        done: done ?? task.done,
+      },
+      id
     );
     return !result
       ? res.status(400).json({ message: "Error to add tasks, try again" })
       : res
-          .status(200)
+          .status(201)
           .json({ message: `tasks with id: ${id} have been updated` });
   } catch (err) {
     return res.status(500).json({ error: err.message });
