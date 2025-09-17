@@ -18,6 +18,21 @@ class Database extends Connection {
     const db = await this.getDb();
     return db.all("SELECT * FROM tasks");
   }
+  async insertTask(params = {}) {
+    if (Object.entries(params).length == 0) {
+      return false;
+    }
+    const db = await this.getDb();
+    const columns = Object.keys(params);
+    const values = Object.values(params);
+    const placeholders = columns.map(() => `?`);
+    const sql = `INSERT INTO tasks (${columns.join(
+      ","
+    )}) VALUES (${placeholders.join(",")})`;
+    const stmt = await db.prepare(sql);
+    const result = await stmt.run(values);
+    return result ?? false;
+  }
 }
 const DB = new Database();
 export default DB;
