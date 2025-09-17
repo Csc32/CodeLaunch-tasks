@@ -51,12 +51,9 @@ export async function updateTask(req, res) {
 
 export async function removeTask(req, res) {
   try {
-    const db = await dbPromise;
     const { id } = req.params;
 
-    const result = await db.run("DELETE FROM tasks WHERE id = :id", {
-      ":id": id,
-    });
+    const result =  DB.deleteTask(id);
     return !result
       ? res.status(400).json({ message: "Error to add tasks, try again" })
       : res
