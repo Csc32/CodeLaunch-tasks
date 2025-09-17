@@ -67,6 +67,20 @@ class Database extends Connection {
     await stmt.finalize();
     return result ?? false;
   }
+  /**
+   * Delete a task by id
+   * @param {string} id
+   * @returns {boolean}
+   */
+  async deleteTask(id) {
+    if (!id) {
+      return false;
+    }
+    const db = await this.getDb();
+    const sql = `DELETE FROM tasks WHERE id = ? `;
+    const result = await db.run(sql, id);
+    return result ?? false;
+  }
 }
 const DB = new Database();
 export default DB;
