@@ -1,9 +1,23 @@
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
-sqlite3.verbose();
-const dbPromise = open({
-	filename: `${process.cwd()}/tasks.db`,
-	driver: sqlite3.Database,
-});
-
-export default dbPromise;
+import Connection from "../libs/connection.js";
+/**
+ * Class to query management
+ * @extends Connection
+ */
+class Database extends Connection {
+  /**
+   * Initialize database connection from the parent class
+   */
+  constructor() {
+    super();
+  }
+  /**
+   * Returns all tasks from the database
+   * @returns
+   */
+  async getTasks() {
+    const db = await this.getDb();
+    return db.all("SELECT * FROM tasks");
+  }
+}
+const DB = new Database();
+export default DB;
