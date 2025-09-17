@@ -13,16 +13,8 @@ export async function getTasks(req, res) {
 
 export async function setTasks(req, res) {
   try {
-    const db = await dbPromise;
     const { title, description, done } = req.body;
-    const result = await db.run(
-      "INSERT INTO tasks(title,description,done) VALUES (:title, :description, :done )",
-      {
-        ":title": title,
-        ":description": description,
-        ":done": done ?? false,
-      }
-    );
+    const result = DB.insertTask({ title, description, done: done ?? 0 });
     return !result
       ? res.status(400).json({ message: "Error to add tasks, try again" })
       : res.status(200).json({ message: "Task added" });
