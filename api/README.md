@@ -15,6 +15,10 @@ Para correr el proyecto es necesario tener instalado:
 
 Una vez asegurado de tener estos requisitos utilizas el comando: `npm install`
 
+## Comandos
+
+- `npm run dev` : ejecuta el proyecto en el puerto 3000
+
 ## Rutas de la REST API
 
 ### GET: /api/v1/tasks
