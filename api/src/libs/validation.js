@@ -55,18 +55,18 @@ class Validation {
 					ruleName === "required" &&
 					(!value || value.toString().trim() === "")
 				) {
-					this.addError(field, `${fieldName} is required`);
+					this.setError(field, `${fieldName} is required`);
 				}
 
 				if (ruleName === "min" && value && value.length < parseInt(ruleValue)) {
-					this.addError(
+					this.setError(
 						field,
 						`${fieldName} must have at least ${ruleValue} characters`,
 					);
 				}
 
 				if (ruleName === "max" && value && value.length > parseInt(ruleValue)) {
-					this.addError(
+					this.setError(
 						field,
 						`${fieldName} must have at most ${ruleValue} characters`,
 					);
