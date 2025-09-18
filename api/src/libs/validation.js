@@ -72,12 +72,8 @@ class Validation {
 					);
 				}
 
-				if (
-					ruleName === "boolean" &&
-					value !== undefined &&
-					![0, 1, true, false].includes(value)
-				) {
-					this.addError(field, `${fieldName} must be true/false or 0/1`);
+				if (ruleName === "boolean" && Boolean(value)) {
+					this.setError(field, `${fieldName} must be true/false or 0/1`);
 				}
 			}
 		}
