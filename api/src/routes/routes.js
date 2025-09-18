@@ -18,7 +18,15 @@ router.post(
 	]),
 	setTasks,
 );
-router.put("/tasks/:id", updateTask);
+router.put(
+	"/tasks/:id",
+	validationMiddleware([
+		{ field: "title", rules: ["min:3"] },
+		{ field: "description", rules: ["max:200"] },
+		{ field: "done", rules: ["required", "boolean"] },
+	]),
+	updateTask,
+);
 router.delete("/tasks/:id", removeTask);
 
 export default router;
