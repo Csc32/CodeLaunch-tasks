@@ -29,7 +29,7 @@ export async function getTasks(req, res) {
  */
 export async function setTasks(req, res) {
 	try {
-		const { title, description, done } = req.body;
+		const { title, description, done } = req.validated;
 		const result = DB.insertTask({ title, description, done: done ?? 0 });
 		return !result
 			? res.status(400).json({ message: "Error to add tasks, try again" })
