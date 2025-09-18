@@ -43,13 +43,13 @@ export async function setTasks(req, res) {
  * Update an existing task in the database
  * Handles PUT requests to modify a task by its id.
  *
- * @param {import("express").Request} req - Express request object, expects params.id and body with {title, description, done}
+ * @param {import("express").Request} req - Express request object, expects params.id and req.validated with {title, description, done}
  * @param {import("express").Response} res - Express response object
  * @returns {Promise<Response>} JSON response with success or error message
  */
 export async function updateTask(req, res) {
 	try {
-		const { title, description, done } = req.body;
+		const { title, description, done } = req.validated;
 		const { id } = req.params;
 		const task = await DB.getTasksById(id);
 		if (!task) {
@@ -57,9 +57,12 @@ export async function updateTask(req, res) {
 		}
 		const result = await DB.updateTask(
 			{
-				title: title ?? task.title,
-				description: description ?? task.description,
-				done: done ?? task.done,
+				title: title !== undefined && title !== "" ? title : task.title,
+				description:
+					description !== undefined && description !== ""
+						? description
+						: task.description,
+				done: done !== undefined ? done : task.done,
 			},
 			id,
 		);
