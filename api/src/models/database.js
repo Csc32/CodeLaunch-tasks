@@ -9,6 +9,21 @@ class Database extends Connection {
 	 */
 	constructor() {
 		super();
+		this.init();
+	}
+	/**
+	 * Check if table exists, and create it if not
+	 */
+	async init() {
+		const db = await this.getDb();
+		await db.exec(`
+        CREATE TABLE IF NOT EXISTS tasks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT,
+            done BOOLEAN DEFAULT 0
+        );
+    `);
 	}
 	/**
 	 * Returns all tasks from the database
