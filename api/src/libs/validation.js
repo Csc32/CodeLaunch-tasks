@@ -73,7 +73,10 @@ class Validation {
 				}
 
 				if (ruleName === "boolean" && Boolean(value)) {
-					this.setError(field, `${fieldName} must be true/false or 0/1`);
+					const validValues = [0, 1, true, false, "0", "1", "true", "false"];
+					if (!validValues.includes(value)) {
+						this.setError(field, `${fieldName} must be true/false or 0/1`);
+					}
 				}
 			}
 		}
