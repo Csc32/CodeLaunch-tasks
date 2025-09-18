@@ -16,6 +16,29 @@ class Validation {
 		this.validatedInputs = {};
 	}
 	/**
+	 * Set inputs dynamically
+	 */
+	setInputs(inputs = {}) {
+		this.inputs = inputs;
+		return this;
+	}
+
+	/**
+	 * Set rules dynamically
+	 */
+	setRules(rules = []) {
+		this.rules = rules;
+		return this;
+	}
+
+	/**
+	 * Set field names
+	 */
+	setFieldNames(fieldNames = {}) {
+		this.fieldNames = fieldNames;
+		return this;
+	}
+	/**
 	 *Execute all validation rules in the array of rules
 	 * @returns boolean
 	 */
