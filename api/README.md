@@ -1,11 +1,11 @@
-# Documentacion de la API.
+# Documentacion de la API
 
-## Tecnologias:
+## Tecnologias
 
 - Express
 - Nodejs
 
-## Instalacion:
+## Instalacion
 
 Para correr el proyecto es necesario tener instalado:
 
