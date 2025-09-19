@@ -32,7 +32,7 @@ Una vez asegurado de tener estos requisitos utilizas el comando: `npm install`
 ### POST: /api/v1/tasks
 
 - Registra una nueva tarea con los datos proporcionados (title, description)
-- Si no se proporicionan datos devuelve error 400 (BAD REQUEST) y un mensaje indicando que faltan datos
+- Si no se proporicionan datos validos devuelve un error 422 (UNPROCESSABLE CONTENT)
 
 #### POST REQUEST
 
@@ -41,7 +41,7 @@ Una vez asegurado de tener estos requisitos utilizas el comando: `npm install`
 ### PUT: /api/v1/tasks/:id
 
 - Actualiza los datos de una tarea en especifico
-- Si los datos proporcionados son invalidos devuelve error 400 (BAD REQUEST) y un mensaje indicando que faltan datos
+- Si no se proporicionan datos validos devuelve un error 422 (UNPROCESSABLE CONTENT)
 
 #### PUT REQUEST
 
